@@ -15,4 +15,4 @@ class Test(object):
 
     def test_login(self):
         LoginPage(driver=self.driver).login()  # 实现登录
-        self.driver.quit()
+        self.driver.quit() # 一定要退出
