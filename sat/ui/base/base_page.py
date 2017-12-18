@@ -29,9 +29,9 @@ class BasePage(object):
         if page_title is not None:
             assert page_title in self._driver.title
 
-    def find_element(self, *locator):
+    def find_element(self, *locator, timeout=None):
         try:
-            return self._init_wait().until(EC.visibility_of_element_located(locator=locator))
+            return self._init_wait(timeout).until(EC.visibility_of_element_located(locator=locator))
         except (NoSuchElementException, TimeoutException):
             self._driver.quit()
             raise TimeoutException(msg='寻找元素失败, 定位方式为: {}'.format(locator))
@@ -40,5 +40,8 @@ class BasePage(object):
         webElement.clear()
         webElement.send_keys(keys)
 
-    def _init_wait(self):
-        return WebDriverWait(driver=self._driver, timeout=settings.UI_WAIT_TIME)
+    def _init_wait(self, timeout):
+        if timeout is None:
+            return WebDriverWait(driver=self._driver, timeout=settings.UI_WAIT_TIME)
+        else:
+            return WebDriverWait(driver=self._driver, timeout=timeout)
