@@ -14,5 +14,5 @@ class Test(object):
     driver = BrowserEngine().init_driver()
 
     def test_login(self):
-        LoginPage(driver=self.driver).login()
+        LoginPage(driver=self.driver).login()  # 实现登录
         self.driver.quit()
